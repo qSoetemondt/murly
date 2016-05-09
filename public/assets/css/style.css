@@ -24,3 +24,12 @@ h1 {
 h2 {
 	color: #66D9EF;
 }
+#btn-murly{
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 12px;
+}
+#input-murly{
+	position: relative;
+}
