@@ -12,7 +12,14 @@ class DefaultController extends Controller
 	 */
 	public function home()
 	{
+		if(isset($_POST['submit'])) {
+			$this->redirectToRoute('merci',['nom' => $_POST['nom']]);
+		}
 		$this->show('default/home');
+	}
+	
+	public function merci($nom) {
+		$this->show('default/merci', ['nom' => $nom]);
 	}
 
 }
