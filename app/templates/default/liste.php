@@ -2,13 +2,24 @@
 
 <?php $this->start('main_content') ?>
 	<h2>Liste des Url's</h2>
-	<?php 
-	foreach ($liste as $list) {
-		echo $list['url'];
-		echo "<br>";
-		echo $list['short_url'];
-		echo "<br>";
-	}
-	?>
+	
+	<table class="table table-striped">
+  		<tr></tr>
+		  <td>ID</td>
+		  <td>URL</td>
+		  <td>Mini-url</td>
+		  <td>Date de création</td>
+		<?php foreach ($liste as $list) {?>
+			<tr></tr>
+			<td> <?= $list['id']?></td>
+			<td> <?= $list['url']?></td>
+			<td> <?= "http://murly/".$list['short_url']?> </td>
+			<td> <?= $list['date_creation'] ?>
+			<?php } ?>
+  
+  
+  
+	</table>
+
 	
 <?php $this->stop('main_content') ?>
