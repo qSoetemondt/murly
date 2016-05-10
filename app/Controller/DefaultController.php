@@ -1,10 +1,9 @@
 <?php
 
 namespace Controller;
+//use \Manager\MiniURLManager;
 
-use \W\Controller\Controller;
-
-class DefaultController extends Controller
+class DefaultController extends \W\Controller\Controller
 {
 
 	/**
@@ -13,13 +12,21 @@ class DefaultController extends Controller
 	public function home()
 	{
 		if(isset($_POST['submit'])) {
-			$this->redirectToRoute('merci',['nom' => $_POST['nom']]);
+			$manager = new \Manager\MiniURLManager();
+			// 1 traitement et insertion
+			$manager->insert(['url'=>$_POST['url'], 'short_url' => \W\Security\StringUtils::randomString(6), 'date_creation' => date('Y-m-D', time()), 'nb_vue'=> 0 ]);
+			$this->redirectToRoute('home');
 		}
 		$this->show('default/home');
 	}
 	
-	public function merci($nom) {
-		$this->show('default/merci', ['nom' => $nom]);
+	public function Redirection($code) {
+		$this->redirect($url);
+	}
+	
+	public function Liste(){
+		// 2 liste
+		$this->show('default/liste');
 	}
 
 }
