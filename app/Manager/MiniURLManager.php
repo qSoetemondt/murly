@@ -7,24 +7,51 @@ class MiniURLManager extends \W\Manager\Manager
 {
 	
 	
-	public function MiniUrl(){
+	public function MiniUrl($url){
+	
+		$miniUrl = $this->findByUrl($url);
+			if($miniUrl){
+				return $miniUrl;
+			}
+			$code = \W\Security\StringUtils::randomString(6);
+			$codeMini = $this->findByCode($code);
+			while ($this->findByCode($code)) {
+				$code = \W\Security\StringUtils::randomString(6);
+			}
+			return $this->insert(['url'=>$url, 'short_url' => $code, 'date_creation' => date('Y-m-d H:i:s', time()), 'nb_vue'=> 0 ]);
+	}
+	
+	public function findByCode($code)
+	{
+
+		$sql = "SELECT * FROM " . $this->table . " WHERE short_url = :code";
+		$sth = $this->dbh->prepare($sql);
+		$sth->bindValue(":code", $code);
+		$sth->execute();
+
+		return $sth->fetch();
+	}
+	
+	public function findByUrl($url)
+	{
+
+		$sql = "SELECT * FROM " . $this->table . " WHERE url = :url";
+		$sth = $this->dbh->prepare($sql);
+		$sth->bindValue(":url", $url);
+		$sth->execute();
+
+		return $sth->fetch();
+	}
+	
+	public function liste()
+	{
+		$liste = $this->findAll($orderBy = "1", $orderDir = "ASC", $limit = null, $offset = null);
+		return $liste;
 		
-		//recup. l'url la transformer puis ajout de www.murly/ avant. 
-		  $url = "www.murly/";
-		  $url_utilisateur = $_POST;
-		  $alphanum = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',0,1,2,3,4,5,6,7,8,9];
-		  $array = [];
-		  for($i=0 ; $i < 6; $i++) {
-			  $nb = mt_rand(0 , 61);
-			  array_push($array,$nb);
-			  $array[$i] = $alphanum[$nb];			
-		  }
-		  $uri = implode('',$array);
-		  $url_utilisateur = $url.$uri;
-		  return $url_utilisateur;
-		  
-			
-				}
+		
+	}
+				
+	
 		
 	
 	

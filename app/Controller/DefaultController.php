@@ -14,8 +14,12 @@ class DefaultController extends \W\Controller\Controller
 		if(isset($_POST['submit'])) {
 			$manager = new \Manager\MiniURLManager();
 			// 1 traitement et insertion
-			$manager->insert(['url'=>$_POST['url'], 'short_url' => \W\Security\StringUtils::randomString(6), 'date_creation' => date('Y-m-D', time()), 'nb_vue'=> 0 ]);
+			$miniurl = $manager->MiniUrl($_POST['url']);
 			$this->redirectToRoute('home');
+		}elseif(isset($_POST['liste'])){
+			$manager = new \Manager\MiniURLManager();
+			$liste = $manager->liste();
+			$this->redirectToRoute('liste');
 		}
 		$this->show('default/home');
 	}
@@ -24,9 +28,10 @@ class DefaultController extends \W\Controller\Controller
 		$this->redirect($url);
 	}
 	
-	public function Liste(){
-		// 2 liste
-		$this->show('default/liste');
+	public function liste(){
+		$manager = new \Manager\MiniURLManager();
+		$liste = $manager->liste();
+		$this->show('default/liste', ['liste' => $liste]);
 	}
 
 }
