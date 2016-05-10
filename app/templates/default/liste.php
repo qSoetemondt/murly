@@ -13,7 +13,7 @@
 			<tr></tr>
 			<td> <?= $list['id']?></td>
 			<td> <?= $list['url']?></td>
-			<td> <?= "http://murly/".$list['short_url']?> </td>
+			<td> <a href="<?= "http://murly/".$list['short_url']?>"><?= "http://murly/".$list['short_url']?> </td>
 			<td> <?= $list['date_creation'] ?>
 			<?php } ?>
   
