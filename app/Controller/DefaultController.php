@@ -28,7 +28,7 @@ class DefaultController extends \W\Controller\Controller
 				
 			$manager = new \Manager\MiniURLManager();
 			// 1 traitement et insertion
-			$miniurl = $manager->MiniUrl($_POST['url']);
+			$miniurl = $manager->MiniUrl($url_longue);
 			$this->redirectToRoute('home');
 		}else{
 			echo "Url invalide! ex: http://www.google.com";
