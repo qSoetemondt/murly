@@ -9,5 +9,7 @@
 		<button class="btn btn-default" id="btn-murly" name="submit" type="submit">Murlyfication</button>
 	</form>
 	
-	<p></p>
+	<p>
+	
+	</p>
 <?php $this->stop('main_content') ?>
