@@ -32,6 +32,9 @@ class DefaultController extends \W\Controller\Controller
 			$manager = new \Manager\MiniURLManager();
 			// 1 traitement et insertion
 			$miniurl = $manager->MiniUrl($url_longue);
+			$lasturl = $miniurl['id'];
+			$doneeUrl = $manager->find($lasturl);
+			setcookie('MurlyCookie',serialize($doneeUrl), (time() + 3600),'/');
 			$this->redirectToRoute('home');
 			}else{
 			echo "Url invalide! ex: http://www.google.com";
@@ -40,7 +43,9 @@ class DefaultController extends \W\Controller\Controller
 			$liste = $manager->liste();
 			$this->redirectToRoute('liste');
 		}
-		$this->show('default/home');
+		$m = new \manager\MiniURLManager();
+		$murl = unserialize($_COOKIE['MurlyCookie']);
+		$this->show('default/home' , ['murl' => $murl]);
 	}
 	
 	public function Redirection($code) {

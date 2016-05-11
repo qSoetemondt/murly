@@ -10,6 +10,15 @@
 	</form>
 	
 	<p>
-	
+		<?php
+			if(isset($_COOKIE)){
+			
+			echo $murl['url'];
+			echo "<br>";
+			echo 'http://murly/'.$murl['short_url'];
+			echo "<br>";
+			}
+		
+		?>
 	</p>
 <?php $this->stop('main_content') ?>
