@@ -11,7 +11,7 @@
 	
 	<p>
 		<?php
-			if(isset($_COOKIE)){
+			if(isset($_COOKIE['MurlyCookie'])){
 			
 			echo $murl['url'];
 			echo "<br>";
@@ -21,4 +21,22 @@
 		
 		?>
 	</p>
-<?php $this->stop('main_content') ?>
+	
+	
+	<?php $this->stop('main_content') ?>
+	<?php $this->start('scripts')?>
+	<script>
+		$.getJSON('api/liste', function(data)){
+			var items = [];
+			console.dir(data);
+		$.each(data,function(key , val){
+			items.push("<a href=\"http://murly\\" + val.short_url + "\" >http://murly\\" + val.short_url + "</a><br>");
+			
+		});
+		$("<div/>",{
+			"class": "my-new-list",
+			html: items.join("")
+		}).appendTo("body");
+		});
+	</script>
+    <?php $this->stop('scripts')?>

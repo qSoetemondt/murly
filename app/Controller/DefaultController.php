@@ -26,7 +26,7 @@ class DefaultController extends \W\Controller\Controller
 				}
 				else if ( strstr($_POST['url'], 'http://www.') == False && preg_match( '/^www./',$_POST['url'] ) == False )
 				{
-					$url_longue = "http://.".$_POST['url'];
+					$url_longue = "http://".$_POST['url'];
 				}
 		if(preg_match( '/(((ftp|http|https):\/\/)|(\/)|(..\/))(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/', $url_longue)){	
 			$manager = new \Manager\MiniURLManager();
@@ -34,7 +34,7 @@ class DefaultController extends \W\Controller\Controller
 			$miniurl = $manager->MiniUrl($url_longue);
 			$lasturl = $miniurl['id'];
 			$doneeUrl = $manager->find($lasturl);
-			setcookie('MurlyCookie',serialize($doneeUrl), (time() + 3600),'/');
+			setcookie('MurlyCookie',serialize($doneeUrl).serialize($murl), (time() + 3600),'/');
 			$this->redirectToRoute('home');
 			}else{
 			echo "Url invalide! ex: http://www.google.com";
@@ -44,8 +44,13 @@ class DefaultController extends \W\Controller\Controller
 			$this->redirectToRoute('liste');
 		}
 		$m = new \manager\MiniURLManager();
-		$murl = unserialize($_COOKIE['MurlyCookie']);
-		$this->show('default/home' , ['murl' => $murl]);
+		if (isset($_COOKIE['MurlyCookie'])) {
+			$murl = unserialize($_COOKIE['MurlyCookie']);
+			$this->show('default/home' , ['murl' => $murl]);
+		}else {
+			$this->show('default/home');
+		}
+		
 	}
 	
 	public function Redirection($code) {
